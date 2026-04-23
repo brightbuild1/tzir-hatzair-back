@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { processSoldiersList } = require('./services/soldierService');
 
-router.post('/soldiers', async (req, res) => {
+router.post('/post-soldiers', async (req, res) => {
     const soldiers = req.body;
 
     if (!Array.isArray(soldiers) || soldiers.length === 0) {
