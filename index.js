@@ -11,8 +11,11 @@ process.on('unhandledRejection', (reason) => {
     process.exit(1);
 });
 
+const { apiKeyAuth } = require('./middleware/auth');
+
 const app = express();
 app.use(express.json());
+app.use(apiKeyAuth);
 
 const PORT = process.env.PORT || 3000;
 
