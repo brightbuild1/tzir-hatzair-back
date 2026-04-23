@@ -72,6 +72,8 @@ async function upsertSoldier(soldierData) {
 async function processSoldiersList(soldiers) {
     const results = [];
     const errors = [];
+    let created = 0;
+    let updated = 0;
 
     for (const soldier of soldiers) {
         if (!soldier.email || !soldier.fullName) {
@@ -81,6 +83,8 @@ async function processSoldiersList(soldiers) {
 
         try {
             const result = await upsertSoldier(soldier);
+            if (result.created) created++;
+            if (result.updated) updated++;
             results.push({ soldier: soldier.email, ...result });
         } catch (err) {
             errors.push({
@@ -90,7 +94,7 @@ async function processSoldiersList(soldiers) {
         }
     }
 
-    return { results, errors };
+    return { results, errors, summary: { created, updated, failed: errors.length } };
 }
 
 module.exports = { upsertSoldier, processSoldiersList };
