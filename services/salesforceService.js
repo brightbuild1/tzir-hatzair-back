@@ -8,7 +8,6 @@ const sfConfig = {
 };
 
 let cachedToken = null;
-console.log('sfConfig',sfConfig)
 async function getAccessToken() {
     if (cachedToken) return cachedToken;
 
