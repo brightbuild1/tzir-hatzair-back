@@ -24,7 +24,10 @@ app.use(apiKeyAuth);
 const PORT = process.env.PORT || 3000;
 
 const soldierRouter = require('./controller');
+const matchRouter = require('./routes/matchRoutes');
+
 app.use('/', soldierRouter);
+app.use('/api/match', matchRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
