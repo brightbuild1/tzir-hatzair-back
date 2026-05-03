@@ -29,9 +29,15 @@ app.use('/api/auth', googleAuthRoutes);
 
 const formRouter = require('./routes/formRoutes');
 
+const scholarshipRouter = require('./routes/scholarshipRoutes');
+
+const chatRouter = require('./routes/chatRoutes');
+
 app.use('/', soldierRouter);
 app.use('/api/match', matchRouter);
 app.use('/api/forms', formRouter);
+app.use('/api/scholarships', scholarshipRouter);
+app.use('/api/v1', chatRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

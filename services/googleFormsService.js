@@ -52,9 +52,21 @@ const mapGoogleToSoldier = (googleResponse) => {
 
 async function fetchFormResponses() {
     try {
-        const res = await forms.forms.responses.list({ formId: FORM_ID });
-        console.log(`Fetched ${res.data.responses?.length ?? 0} form responses`);
-        return res.data.responses || [];
+        let allResponses = [];
+        let pageToken = undefined;
+
+        do {
+            const res = await forms.forms.responses.list({
+                formId: FORM_ID,
+                pageToken,
+            });
+            const responses = res.data.responses || [];
+            allResponses = allResponses.concat(responses);
+            pageToken = res.data.nextPageToken;
+        } while (pageToken);
+
+        console.log(`Fetched ${allResponses.length} form responses (all pages)`);
+        return allResponses;
     } catch (error) {
         console.error('Google Forms Error:', error.response?.data || error.message);
         throw error;
